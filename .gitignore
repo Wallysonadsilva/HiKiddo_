@@ -1,0 +1,32 @@
+# Xcode
+xcuserdata/
+*.xcworkspace
+!default.xcworkspace
+build/
+DerivedData/
+.swiftpm/
+
+# User settings
+*.xcuserstate
+*.xcscheme
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.pbxuser
+!default.pbxuser
+UserInterfaceState.xcuserstate
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Test results
+*.xcresult
+
+# Test folders
+Hi-KiddoTests/
+Hi-KiddoUITests/
+
+# CocoaPods
+Pods/
