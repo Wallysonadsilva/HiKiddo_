@@ -58,12 +58,3 @@ struct WelcomeView_Previews: PreviewProvider {
     }
 }
 
-// AuthView
-struct AuthView: View {
-    var body: some View {
-        VStack {
-            Text("Login/Register")
-                .font(.largeTitle)
-        }
-    }
-}
