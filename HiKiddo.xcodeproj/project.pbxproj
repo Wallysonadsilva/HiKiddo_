@@ -6,6 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		13443F472D2ECA7100237A64 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 13443F462D2ECA7100237A64 /* Auth */; };
+		13443F492D2ECA7100237A64 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 13443F482D2ECA7100237A64 /* PostgREST */; };
+		13443F4B2D2ECA7100237A64 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 13443F4A2D2ECA7100237A64 /* Realtime */; };
+		13443F4D2D2ECA7100237A64 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 13443F4C2D2ECA7100237A64 /* Storage */; };
+		13443F512D2ECBA400237A64 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 13443F502D2ECBA400237A64 /* Supabase */; };
+		13443F602D2EDB1D00237A64 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 13443F5F2D2EDB1D00237A64 /* Config.xcconfig */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		133AB6602D2C9785007397CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +36,7 @@
 		133AB64F2D2C9784007397CF /* HiKiddo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HiKiddo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		133AB65F2D2C9785007397CF /* HiKiddoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HiKiddoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		133AB6692D2C9785007397CF /* HiKiddoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HiKiddoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		13443F5F2D2EDB1D00237A64 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -65,6 +75,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13443F512D2ECBA400237A64 /* Supabase in Frameworks */,
+				13443F4D2D2ECA7100237A64 /* Storage in Frameworks */,
+				13443F4B2D2ECA7100237A64 /* Realtime in Frameworks */,
+				13443F492D2ECA7100237A64 /* PostgREST in Frameworks */,
+				13443F472D2ECA7100237A64 /* Auth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +103,7 @@
 		133AB6462D2C9784007397CF = {
 			isa = PBXGroup;
 			children = (
+				13443F5F2D2EDB1D00237A64 /* Config.xcconfig */,
 				133AB6512D2C9784007397CF /* HiKiddo */,
 				133AB6622D2C9785007397CF /* HiKiddoTests */,
 				133AB66C2D2C9785007397CF /* HiKiddoUITests */,
@@ -125,6 +141,11 @@
 			);
 			name = HiKiddo;
 			packageProductDependencies = (
+				13443F462D2ECA7100237A64 /* Auth */,
+				13443F482D2ECA7100237A64 /* PostgREST */,
+				13443F4A2D2ECA7100237A64 /* Realtime */,
+				13443F4C2D2ECA7100237A64 /* Storage */,
+				13443F502D2ECBA400237A64 /* Supabase */,
 			);
 			productName = HiKiddo;
 			productReference = 133AB64F2D2C9784007397CF /* HiKiddo.app */;
@@ -208,6 +229,9 @@
 			);
 			mainGroup = 133AB6462D2C9784007397CF;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				13443F452D2ECA7100237A64 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 133AB6502D2C9784007397CF /* Products */;
 			projectDirPath = "";
@@ -225,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13443F602D2EDB1D00237A64 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +309,7 @@
 /* Begin XCBuildConfiguration section */
 		133AB6712D2C9785007397CF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13443F5F2D2EDB1D00237A64 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -347,6 +373,7 @@
 		};
 		133AB6722D2C9785007397CF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13443F5F2D2EDB1D00237A64 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -403,6 +430,7 @@
 		};
 		133AB6742D2C9785007397CF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13443F5F2D2EDB1D00237A64 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -432,6 +460,7 @@
 		};
 		133AB6752D2C9785007397CF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13443F5F2D2EDB1D00237A64 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -571,6 +600,45 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		13443F452D2ECA7100237A64 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase-community/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		13443F462D2ECA7100237A64 /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13443F452D2ECA7100237A64 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Auth;
+		};
+		13443F482D2ECA7100237A64 /* PostgREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13443F452D2ECA7100237A64 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = PostgREST;
+		};
+		13443F4A2D2ECA7100237A64 /* Realtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13443F452D2ECA7100237A64 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Realtime;
+		};
+		13443F4C2D2ECA7100237A64 /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13443F452D2ECA7100237A64 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Storage;
+		};
+		13443F502D2ECBA400237A64 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13443F452D2ECA7100237A64 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 133AB6472D2C9784007397CF /* Project object */;
 }

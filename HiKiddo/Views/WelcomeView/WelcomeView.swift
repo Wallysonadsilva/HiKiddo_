@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     @State private var navigateToAuth = false
+    @StateObject private var authViewModel = AuthViewModel(supabase: Database.client)
     
     var body: some View {
         NavigationStack {
@@ -34,7 +35,7 @@ struct WelcomeView: View {
                 Spacer()
                 
                 // Start Button
-                NavigationLink(destination: AuthView()) {
+                NavigationLink(destination: AuthView(viewModel: authViewModel)) {
                     Text("Get Started")
                         .font(.title3)
                         .bold()

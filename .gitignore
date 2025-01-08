@@ -30,3 +30,6 @@ HiKiddoUITests/
 
 # CocoaPods
 Pods/
+
+# config
+Config.xcconfig
