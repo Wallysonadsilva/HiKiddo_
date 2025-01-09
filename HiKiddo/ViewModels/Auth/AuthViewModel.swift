@@ -19,12 +19,22 @@ class AuthViewModel: ObservableObject {
     }
     
     func signUp(email: String, password: String, fullName: String) async throws {
-        let authResponse = try await supabase.auth.signUp(
-            email: email,
-            password: password,
-            data: ["full_name": AnyJSON(fullName)]
-        )
-        print("Sign up successful: \(authResponse)")
+        do {
+            try await supabase.auth.signIn(
+                email: email,
+                password: password
+            )
+            throw NSError(domain: "Auth", code: 409, userInfo: [NSLocalizedDescriptionKey: "User already exists"])
+        } catch let error as NSError where error.domain == "Auth" {
+            throw error
+        } catch {
+            let authResponse = try await supabase.auth.signUp(
+                email: email,
+                password: password,
+                data: ["full_name": AnyJSON(fullName)]
+            )
+            print("Sign up successful: \(authResponse)")
+        }
     }
     
     func signIn(email: String, password: String) async throws {
