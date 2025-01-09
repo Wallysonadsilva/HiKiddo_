@@ -13,6 +13,7 @@ class AuthViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isAuthenticated = false
     let supabase: SupabaseClient
+    private lazy var facebookAuthService = FacebookAuthService(supabase: supabase)
     
     init(supabase: SupabaseClient = Database.client) {
         self.supabase = supabase
@@ -79,4 +80,20 @@ class AuthViewModel: ObservableObject {
             throw error
         }
     }
+    
+    // Facebook sign in
+    func handleFacebookSignIn() async {
+            do {
+                let session = try await facebookAuthService.signIn()
+                await MainActor.run {
+                    self.isAuthenticated = true
+                    // Handle successful sign in
+                    print("Successfully signed in with Facebook")
+                }
+            } catch {
+                await MainActor.run {
+                    self.errorMessage = error.localizedDescription
+                }
+            }
+        }
 }

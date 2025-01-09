@@ -13,6 +13,7 @@
 		13443F4D2D2ECA7100237A64 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 13443F4C2D2ECA7100237A64 /* Storage */; };
 		13443F512D2ECBA400237A64 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 13443F502D2ECBA400237A64 /* Supabase */; };
 		13443F602D2EDB1D00237A64 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 13443F5F2D2EDB1D00237A64 /* Config.xcconfig */; };
+		13F19FC02D30626900C98E1D /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 13F19FBF2D30626900C98E1D /* FacebookLogin */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 			files = (
 				13443F512D2ECBA400237A64 /* Supabase in Frameworks */,
 				13443F4D2D2ECA7100237A64 /* Storage in Frameworks */,
+				13F19FC02D30626900C98E1D /* FacebookLogin in Frameworks */,
 				13443F4B2D2ECA7100237A64 /* Realtime in Frameworks */,
 				13443F492D2ECA7100237A64 /* PostgREST in Frameworks */,
 				13443F472D2ECA7100237A64 /* Auth in Frameworks */,
@@ -146,6 +148,7 @@
 				13443F4A2D2ECA7100237A64 /* Realtime */,
 				13443F4C2D2ECA7100237A64 /* Storage */,
 				13443F502D2ECBA400237A64 /* Supabase */,
+				13F19FBF2D30626900C98E1D /* FacebookLogin */,
 			);
 			productName = HiKiddo;
 			productReference = 133AB64F2D2C9784007397CF /* HiKiddo.app */;
@@ -231,6 +234,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				13443F452D2ECA7100237A64 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				13F19FBE2D30626900C98E1D /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 133AB6502D2C9784007397CF /* Products */;
@@ -610,6 +614,14 @@
 				minimumVersion = 2.5.1;
 			};
 		};
+		13F19FBE2D30626900C98E1D /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -637,6 +649,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 13443F452D2ECA7100237A64 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Supabase;
+		};
+		13F19FBF2D30626900C98E1D /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13F19FBE2D30626900C98E1D /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
