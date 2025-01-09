@@ -13,14 +13,14 @@ struct WelcomeView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 30) {
+            VStack(spacing: 25) {
                 Spacer()
                 
                 // Image
                 Image("Welcome_Image")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 250)
+                    .frame(width: 400)
                     .padding(.top, 50)
                 
                 // Welcome Message
@@ -45,6 +45,7 @@ struct WelcomeView: View {
                         .background(Color.primaryPurple)
                         .cornerRadius(12)
                 }
+                .accessibilityIdentifier("authButton")
                 .padding(.horizontal, 20)
                 .padding(.bottom, 40)
             }

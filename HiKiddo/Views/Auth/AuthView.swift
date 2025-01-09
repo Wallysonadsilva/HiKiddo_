@@ -17,6 +17,7 @@ struct AuthView: View {
     
     @State private var authMode: AuthMode = .login
     @State private var rememberMe: Bool = false
+    @State private var showError: Bool = false
     
     @State private var email: String = ""
     @State private var password: String = ""
@@ -67,12 +68,14 @@ struct AuthView: View {
                         // Form Fields
                         VStack(spacing: 20) {
                             if authMode == .register {
-                                CustomTextField(icon: "person.fill", placeholder: "Full Name", text: $fullName)
+                                CustomTextField(icon: "person.fill", placeholder: "Full Name", text: $fullName, accessibilityID: "fullNameField")
                             }
                             
-                            CustomTextField(icon: "envelope.fill", placeholder: "Email", text: $email)
+                            CustomTextField(icon: "envelope.fill", placeholder: "Email", text: $email, accessibilityID: "emailField")
+                                .accessibilityIdentifier("emailField")
                             
-                            CustomTextField(icon: "lock.fill", placeholder: "Password", text: $password, isSecure: true)
+                            CustomTextField(icon: "lock.fill", placeholder: "Password", text: $password, isSecure: true, accessibilityID: "passwordField")
+                                .accessibilityIdentifier("passwordField")
                         }
                         .padding(.horizontal, 25)
                         
@@ -103,6 +106,7 @@ struct AuthView: View {
                                     }
                                 } catch {
                                     print("Auth error: \(error)")
+                                    showError = true
                                 }
                             }
                         }) {
@@ -115,6 +119,7 @@ struct AuthView: View {
                                 .cornerRadius(12)
                                 .shadow(radius: 5)
                         }
+                        .accessibilityIdentifier(authMode == .login ? "signInSubmitButton" : "signUpSubmitButton")
                         .padding(.horizontal, 25)
                         .padding(.top, 10)
                         
@@ -127,6 +132,7 @@ struct AuthView: View {
                                     authMode = authMode == .login ? .register : .login
                                 }
                             }
+                            .accessibilityIdentifier(authMode == .login ? "signUpButton" : "signInButton")
                             .foregroundColor(Color.primaryPurple)
                             .fontWeight(.bold)
                         }
@@ -134,14 +140,19 @@ struct AuthView: View {
                         
                         Spacer()
                     }
+                    .alert("Error", isPresented: $showError) {
+                               Button("OK") {
+                                   showError = false
+                                   viewModel.errorMessage = nil
+                               }
+                               .accessibilityIdentifier("errorButton")
+                           } message: {
+                               Text(viewModel.errorMessage ?? "")
+                                   .accessibilityIdentifier("errorMessage")
+                           }
                 }
         }
         .navigationBarHidden(true)
-        .alert("Error", isPresented: .constant(viewModel.errorMessage != nil)) {
-            Button("OK") { viewModel.errorMessage = nil }
-        } message: {
-            Text(viewModel.errorMessage ?? "")
-        }
     }
 }
 
@@ -151,6 +162,7 @@ struct CustomTextField: View {
     let placeholder: String
     @Binding var text: String
     var isSecure: Bool = false
+    var accessibilityID: String? = nil
     
     var body: some View {
         HStack {
@@ -160,8 +172,10 @@ struct CustomTextField: View {
             
             if isSecure {
                 SecureField(placeholder, text: $text)
+                    .accessibilityIdentifier(accessibilityID ?? "")
             } else {
                 TextField(placeholder, text: $text)
+                    .accessibilityIdentifier(accessibilityID ?? "")
             }
         }
         .padding()
