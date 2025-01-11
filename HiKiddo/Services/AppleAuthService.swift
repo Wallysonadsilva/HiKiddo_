@@ -1,14 +1,15 @@
 //
-//  FacebookAuthService.swift
+//  AppleAuthService.swift
 //  HiKiddo
 //
-//  Created by W on 09/01/2025.
+//  Created by W on 11/01/2025.
 //
+
 import Foundation
 import Supabase
 import AuthenticationServices
 
-class FacebookAuthService {
+class AppleAuthService {
     private let supabase: SupabaseClient
     
     init(supabase: SupabaseClient) {
@@ -16,13 +17,13 @@ class FacebookAuthService {
     }
     
     func signIn() async throws -> Session {
-        print("Starting Facebook login...")
+        print("Starting Apple login...")
         guard let redirectURL = URL(string: "HiKiddo.HiKiddo://login-callback") else {
             throw URLError(.badURL)
         }
         
         let session = try await supabase.auth.signInWithOAuth(
-            provider: .facebook,
+            provider: .apple,
             redirectTo: redirectURL
         ) { (session: ASWebAuthenticationSession) in
             print("Configuring OAuth session...")
@@ -31,5 +32,4 @@ class FacebookAuthService {
         print("OAuth sign in successful")
         return session
     }
-
 }

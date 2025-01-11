@@ -179,7 +179,14 @@ struct AuthView: View {
                             // Google Sign In Button
                             Button(action: {
                                 isGoogleSignInLoading = true
-                                // Google sign in logic will be added later
+                                Task {
+                                    do {
+                                        await viewModel.handleGoogleSignIn()
+                                    } catch {
+                                        print("Google login error: \(error)")
+                                    }
+                                    isGoogleSignInLoading = false  // Make sure to reset loading state
+                                }
                             }) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 12)

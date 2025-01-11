@@ -14,6 +14,7 @@ class AuthViewModel: ObservableObject {
     @Published var isAuthenticated = false
     let supabase: SupabaseClient
     private lazy var facebookAuthService = FacebookAuthService(supabase: supabase)
+    private lazy var googleAuthService = GoogleAuthService(supabase: supabase)
     
     init(supabase: SupabaseClient = Database.client) {
         self.supabase = supabase
@@ -81,7 +82,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    // Facebook sign in
+    // Facebook Sign in
     func handleFacebookSignIn() async {
             do {
                 let session = try await facebookAuthService.signIn()
@@ -96,4 +97,15 @@ class AuthViewModel: ObservableObject {
                 }
             }
         }
+    
+    // Google Sign in
+    func handleGoogleSignIn() async {
+        do {
+            let session = try await googleAuthService.signIn()
+            self.isAuthenticated = true
+            print("Successfully signed in with Google")
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+    }
 }
