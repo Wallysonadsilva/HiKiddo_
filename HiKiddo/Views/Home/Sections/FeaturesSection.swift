@@ -12,7 +12,7 @@ struct FeaturesSection: View {
     let features = [
         FeatureCard(title: "Create Event", backgroundImage: "create_event", backgroundColor: .purple),
         FeatureCard(title: "Tasks", backgroundImage: "task_feature", backgroundColor: .green),
-        FeatureCard(title: "Family Board", backgroundImage: "", backgroundColor: .purple)
+        FeatureCard(title: "Family Board", backgroundImage: "family_board", backgroundColor: .blue)
     ]
     
     var body: some View {

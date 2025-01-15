@@ -89,7 +89,7 @@ class AuthViewModel: ObservableObject {
                 await MainActor.run {
                     self.isAuthenticated = true
                     // Handle successful sign in
-                    print("Successfully signed in with Facebook")
+                    print("Successfully signed in with Facebook:  \(session)")
                 }
             } catch {
                 await MainActor.run {
@@ -103,7 +103,7 @@ class AuthViewModel: ObservableObject {
         do {
             let session = try await googleAuthService.signIn()
             self.isAuthenticated = true
-            print("Successfully signed in with Google")
+            print("Successfully signed in with Google:  \(session)")
         } catch {
             self.errorMessage = error.localizedDescription
         }

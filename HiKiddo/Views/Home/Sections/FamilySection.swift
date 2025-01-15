@@ -9,7 +9,11 @@ import Foundation
 import SwiftUI
 
 struct FamilySection: View {
-    //let familyMembers: [FamilyMember] = []
+    let familyMembers = [
+        FamilyMember(name: "Alice", profileImage: "create_event"),
+        FamilyMember(name: "Elle", profileImage: "task_feature"),
+        FamilyMember(name: "Bob", profileImage: "family_board")
+    ]
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,8 +24,8 @@ struct FamilySection: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
-                    ForEach(0..<4) { _ in
-                        FamilyMemberView(name: "Member", image: "placeholder")
+                    ForEach(familyMembers) { member in // Use ForEach with your array
+                        FamilyMemberView(familyMember: member)
                     }
                     
                     // Add Member Button

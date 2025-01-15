@@ -9,6 +9,6 @@ import SwiftUI
 struct FeatureCard: Identifiable {
     let id = UUID()
     let title: String
-    let backgroundImage: String  // Image name from assets
-    let backgroundColor: Color   // Custom background color for each card
+    let backgroundImage: String
+    let backgroundColor: Color
 }

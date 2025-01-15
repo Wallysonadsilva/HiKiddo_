@@ -9,8 +9,7 @@ import Foundation
 import SwiftUI
 
 struct FamilyMemberView: View {
-    let name: String
-    let image: String
+    let familyMember: FamilyMember
     
     var body: some View {
         VStack {
@@ -20,10 +19,23 @@ struct FamilyMemberView: View {
                     .fill(Color.blue.opacity(0.1))
                     .frame(width: 60, height: 60)
                 
+                Image(familyMember.profileImage)  // Use the profile image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)  // Slightly smaller than circle
+                    .clipShape(Circle())
+                
                 // Cloud and hill elements
             }
-            Text(name)
+            Text(familyMember.name)
                 .font(.caption)
         }
     }
+}
+
+#Preview {
+    FamilyMemberView(familyMember: FamilyMember(
+        name: "John Doe",
+        profileImage: "create_event"
+    ))
 }

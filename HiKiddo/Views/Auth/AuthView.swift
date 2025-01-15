@@ -180,10 +180,10 @@ struct AuthView: View {
                             Button(action: {
                                 isGoogleSignInLoading = true
                                 Task {
-                                    do {
+                                    do{
                                         await viewModel.handleGoogleSignIn()
                                     } catch {
-                                        print("Google login error: \(error)")
+                                        print("Google Sign In Error: \(error)")
                                     }
                                     isGoogleSignInLoading = false  // Make sure to reset loading state
                                 }
@@ -212,7 +212,7 @@ struct AuthView: View {
                                     do {
                                         await viewModel.handleFacebookSignIn()
                                     } catch {
-                                        print("Facebook login error: \(error)")
+                                         print("Facebook Sign In Error: \(error)")
                                     }
                                     isFacebookSignInLoading = false  // Make sure to reset loading state
                                 }
