@@ -28,18 +28,22 @@ struct FamilySection: View {
                         FamilyMemberView(familyMember: member)
                     }
                     
-                    // Add Member Button
-                    Button(action: {
-                        // Add member action
-                    }) {
-                        ZStack {
-                            Circle()
-                                .stroke(Color.gray.opacity(0.3), lineWidth: 2)
-                                .frame(width: 60, height: 60)
-                            
-                            Image(systemName: "plus")
-                                .foregroundColor(.gray)
+                    VStack{
+                        // Add Member Button
+                        Button(action: {
+                            // Add member action
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .stroke(Color.gray.opacity(0.3), lineWidth: 2)
+                                    .frame(width: 60, height: 60)
+                                
+                                Image(systemName: "plus")
+                                    .foregroundColor(.gray)
+                            }
                         }
+                        Text(" ")
+                            .font(.caption)
                     }
                 }
                 .padding()

@@ -9,10 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ActivityCardView: View {
-    let title: String
-    let description: String
-    let timeAgo: String
-    let author: String
+    let activity: Activity
     
     var body: some View {
         HStack {
@@ -46,15 +43,15 @@ struct ActivityCardView: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(title)
+                Text(activity.title)
                     .font(.headline)
-                Text(description)
+                Text(activity.description)
                     .font(.subheadline)
                     .foregroundColor(.gray)
                 HStack {
-                    Text(timeAgo)
+                    Text(activity.timeAgo)
                     Spacer()
-                    Text("By \(author)")
+                    Text("By \(activity.author)")
                 }
                 .font(.caption)
             }
@@ -64,4 +61,13 @@ struct ActivityCardView: View {
         .background(Color.gray.opacity(0.1))
         .cornerRadius(15)
     }
+}
+
+#Preview {
+    ActivityCardView(activity: Activity(
+        title: "New Event",
+        description: "Event description",
+        author: "John Doe",
+        createdAt: Date()
+    ))
 }

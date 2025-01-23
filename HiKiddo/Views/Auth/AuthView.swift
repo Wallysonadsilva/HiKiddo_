@@ -33,225 +33,230 @@ struct AuthView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Top curved section with an image overlay
-            ZStack {
-                Color.primaryPurple.opacity(1.0)
-                    .clipShape(CustomShape())
-                    .ignoresSafeArea(edges: .top)
+        NavigationStack{
+            VStack(spacing: 0) {
+                // Top curved section with an image overlay
+                ZStack {
+                    Color.primaryPurple.opacity(1.0)
+                        .clipShape(CustomShape())
+                        .ignoresSafeArea(edges: .top)
+                    
+                    // Add the image
+                    Image("Auth_Image2")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 150)
+                        .clipShape(Circle())
+                        .shadow(radius: 5)
+                        .padding(.top, -30)
+                }
+                .frame(height: 200)
                 
-                // Add the image
-                Image("Auth_Image2")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 150)
-                    .clipShape(Circle())
-                    .shadow(radius: 5)
-                    .padding(.top, -30)
-            }
-            .frame(height: 200)
-            
-            Color.white
-                .ignoresSafeArea()
-                .safeAreaInset(edge: .bottom) {
-                    VStack(spacing: 25) {
-                        
-                        
-                        // Welcome Text
-                        VStack(spacing: 8) {
-                            Text(authMode == .login ? "Welcome Back" : "Create Account")
-                                .font(.title)
-                                .bold()
-                                .foregroundColor(.black)
+                Color.white
+                    .ignoresSafeArea()
+                    .safeAreaInset(edge: .bottom) {
+                        VStack(spacing: 25) {
                             
-                            Text(authMode == .login ? "Login to your account" : "Sign up for a new account")
-                                .font(.subheadline)
-                                .foregroundColor(.black.opacity(0.8))
-                        }
-                        
-                        // Form Fields
-                        VStack(spacing: 15) {
-                            if authMode == .register {
-                                CustomTextField(icon: "person.fill", placeholder: "Full Name", text: $fullName, accessibilityID: "fullNameField")
+                            
+                            // Welcome Text
+                            VStack(spacing: 8) {
+                                Text(authMode == .login ? "Welcome Back" : "Create Account")
+                                    .font(.title)
+                                    .bold()
+                                    .foregroundColor(.black)
+                                
+                                Text(authMode == .login ? "Login to your account" : "Sign up for a new account")
+                                    .font(.subheadline)
+                                    .foregroundColor(.black.opacity(0.8))
                             }
                             
-                            CustomTextField(icon: "envelope.fill", placeholder: "Email", text: $email, accessibilityID: "emailField")
-                                .accessibilityIdentifier("emailField")
-                            
-                            CustomTextField(icon: "lock.fill", placeholder: "Password", text: $password, isSecure: true, accessibilityID: "passwordField")
-                                .accessibilityIdentifier("passwordField")
-                        }
-                        .padding(.horizontal, 25)
-                        
-                        // Remember me and Forgot Password
-                        if authMode == .login {
-                            HStack {
-                                Toggle("Remember me", isOn: .constant(false))
-                                    .foregroundColor(.gray)
-                                
-                                Spacer()
-                                
-                                Button("Forgot Password?") {
-                                    // Handle forgot password
+                            // Form Fields
+                            VStack(spacing: 15) {
+                                if authMode == .register {
+                                    CustomTextField(icon: "person.fill", placeholder: "Full Name", text: $fullName, accessibilityID: "fullNameField")
                                 }
-                                .foregroundColor(.gray)
+                                
+                                CustomTextField(icon: "envelope.fill", placeholder: "Email", text: $email, accessibilityID: "emailField")
+                                    .accessibilityIdentifier("emailField")
+                                
+                                CustomTextField(icon: "lock.fill", placeholder: "Password", text: $password, isSecure: true, accessibilityID: "passwordField")
+                                    .accessibilityIdentifier("passwordField")
                             }
                             .padding(.horizontal, 25)
-                        }
-                        
-                        // Login/Signup Button
-                        Button(action: {
-                            Task {
-                                do {
-                                    if authMode == .login {
-                                        try await viewModel.signIn(email: email, password: password)
-                                    } else {
-                                        try await viewModel.signUp(email: email, password: password, fullName: fullName)
-                                    }
-                                } catch {
-                                    print("Auth error: \(error)")
-                                    showError = true
-                                }
-                            }
-                        }) {
-                            Text(authMode == .login ? "LOGIN" : "SIGN UP")
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.primaryPurple.opacity(1.0))
-                                .cornerRadius(12)
-                                .shadow(radius: 5)
-                        }
-                        .accessibilityIdentifier(authMode == .login ? "signInSubmitButton" : "signUpSubmitButton")
-                        .padding(.horizontal, 25)
-                        .padding(.top, 5)
-                        
-                        // Switch between Login/Signup
-                        HStack {
-                            Text(authMode == .login ? "Don't have an account?" : "Already have an account?")
-                                .foregroundColor(.gray)
-                            Button(authMode == .login ? "Sign up" : "Login") {
-                                withAnimation {
-                                    authMode = authMode == .login ? .register : .login
-                                }
-                            }
-                            .accessibilityIdentifier(authMode == .login ? "signUpButton" : "signInButton")
-                            .foregroundColor(Color.primaryPurple)
-                            .fontWeight(.bold)
-                        }
-                        
-                        // Add Divider with "or" text
-                        HStack {
-                            VStack { Divider() }.padding(.horizontal, 25)
-                            Text("OR")
-                                .foregroundColor(.gray)
-                                .font(.subheadline)
-                            VStack { Divider() }.padding(.horizontal, 25)
-                        }
-                        .padding(.vertical, 5)
-                        
-                        // Social Media Buttons Row
-                        HStack(spacing: 20) {
-                            // Apple Sign In Button
-                            Button(action: {
-                                isAppleSignInLoading = true
-                                // Apple sign in logic will be added later
-                            }) {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color(.black))
-                                        .shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 2)
-                                        .frame(width: 60, height: 60)
+                            
+                            // Remember me and Forgot Password
+                            if authMode == .login {
+                                HStack {
+                                    Toggle("Remember me", isOn: .constant(false))
+                                        .foregroundColor(.gray)
                                     
-                                    if isAppleSignInLoading {
-                                        ProgressView()
-                                    } else {
-                                        Image(systemName: "apple.logo")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 24, height: 24)
-                                            .foregroundColor(.white)
+                                    Spacer()
+                                    
+                                    Button("Forgot Password?") {
+                                        // Handle forgot password
                                     }
+                                    .foregroundColor(.gray)
                                 }
+                                .padding(.horizontal, 25)
                             }
                             
-                            // Google Sign In Button
+                            // Login/Signup Button
                             Button(action: {
-                                isGoogleSignInLoading = true
-                                Task {
-                                    do{
-                                        await viewModel.handleGoogleSignIn()
-                                    } catch {
-                                        print("Google Sign In Error: \(error)")
-                                    }
-                                    isGoogleSignInLoading = false  // Make sure to reset loading state
-                                }
-                            }) {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color(.systemBackground))
-                                        .shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 2)
-                                        .frame(width: 60, height: 60)
-                                    
-                                    if isGoogleSignInLoading {
-                                        ProgressView()
-                                    } else {
-                                        Image("google_logo") // Add this to your assets
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 40, height: 40)
-                                    }
-                                }
-                            }
-                            
-                            // Facebook Sign In Button
-                            Button(action: {
-                                isFacebookSignInLoading = true
                                 Task {
                                     do {
-                                        await viewModel.handleFacebookSignIn()
+                                        if authMode == .login {
+                                            try await viewModel.signIn(email: email, password: password)
+                                        } else {
+                                            try await viewModel.signUp(email: email, password: password, fullName: fullName)
+                                        }
                                     } catch {
-                                         print("Facebook Sign In Error: \(error)")
+                                        print("Auth error: \(error)")
+                                        showError = true
                                     }
-                                    isFacebookSignInLoading = false  // Make sure to reset loading state
                                 }
                             }) {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color(red: 66/255, green: 103/255, blue: 178/255))
-                                        .shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 2)
-                                        .frame(width: 60, height: 60)
-                                    
-                                    if isFacebookSignInLoading {
-                                        ProgressView()
-                                            .tint(.white)
-                                    } else {
-                                        Image("facebook_logo") // Add this to your assets
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 24, height: 24)
+                                Text(authMode == .login ? "LOGIN" : "SIGN UP")
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.primaryPurple.opacity(1.0))
+                                    .cornerRadius(12)
+                                    .shadow(radius: 5)
+                            }
+                            .accessibilityIdentifier(authMode == .login ? "signInSubmitButton" : "signUpSubmitButton")
+                            .padding(.horizontal, 25)
+                            .padding(.top, 5)
+                            
+                            // Switch between Login/Signup
+                            HStack {
+                                Text(authMode == .login ? "Don't have an account?" : "Already have an account?")
+                                    .foregroundColor(.gray)
+                                Button(authMode == .login ? "Sign up" : "Login") {
+                                    withAnimation {
+                                        authMode = authMode == .login ? .register : .login
+                                    }
+                                }
+                                .accessibilityIdentifier(authMode == .login ? "signUpButton" : "signInButton")
+                                .foregroundColor(Color.primaryPurple)
+                                .fontWeight(.bold)
+                            }
+                            
+                            // Add Divider with "or" text
+                            HStack {
+                                VStack { Divider() }.padding(.horizontal, 25)
+                                Text("OR")
+                                    .foregroundColor(.gray)
+                                    .font(.subheadline)
+                                VStack { Divider() }.padding(.horizontal, 25)
+                            }
+                            .padding(.vertical, 5)
+                            
+                            // Social Media Buttons Row
+                            HStack(spacing: 20) {
+                                // Apple Sign In Button
+                                Button(action: {
+                                    isAppleSignInLoading = true
+                                    // Apple sign in logic will be added later
+                                }) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(Color(.black))
+                                            .shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 2)
+                                            .frame(width: 60, height: 60)
+                                        
+                                        if isAppleSignInLoading {
+                                            ProgressView()
+                                        } else {
+                                            Image(systemName: "apple.logo")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 24, height: 24)
+                                                .foregroundColor(.white)
+                                        }
+                                    }
+                                }
+                                
+                                // Google Sign In Button
+                                Button(action: {
+                                    isGoogleSignInLoading = true
+                                    Task {
+                                        do{
+                                            await viewModel.handleGoogleSignIn()
+                                        } catch {
+                                            print("Google Sign In Error: \(error)")
+                                        }
+                                        isGoogleSignInLoading = false  // Make sure to reset loading state
+                                    }
+                                }) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(Color(.systemBackground))
+                                            .shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 2)
+                                            .frame(width: 60, height: 60)
+                                        
+                                        if isGoogleSignInLoading {
+                                            ProgressView()
+                                        } else {
+                                            Image("google_logo") // Add this to your assets
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 40, height: 40)
+                                        }
+                                    }
+                                }
+                                
+                                // Facebook Sign In Button
+                                Button(action: {
+                                    isFacebookSignInLoading = true
+                                    Task {
+                                        do {
+                                            await viewModel.handleFacebookSignIn()
+                                        } catch {
+                                            print("Facebook Sign In Error: \(error)")
+                                        }
+                                        isFacebookSignInLoading = false  // Make sure to reset loading state
+                                    }
+                                }) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(Color(red: 66/255, green: 103/255, blue: 178/255))
+                                            .shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 2)
+                                            .frame(width: 60, height: 60)
+                                        
+                                        if isFacebookSignInLoading {
+                                            ProgressView()
+                                                .tint(.white)
+                                        } else {
+                                            Image("facebook_logo") // Add this to your assets
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 24, height: 24)
+                                        }
                                     }
                                 }
                             }
+                            .padding(.top, 5)
+                            
+                            Spacer()
                         }
-                        .padding(.top, 5)
-                        
-                        Spacer()
-                    }
-                    .alert("Error", isPresented: $showError) {
-                        Button("OK") {
-                            showError = false
-                            viewModel.errorMessage = nil
+                        .alert("Error", isPresented: $showError) {
+                            Button("OK") {
+                                showError = false
+                                viewModel.errorMessage = nil
+                            }
+                            .accessibilityIdentifier("errorButton")
+                        } message: {
+                            Text(viewModel.errorMessage ?? "")
+                                .accessibilityIdentifier("errorMessage")
                         }
-                        .accessibilityIdentifier("errorButton")
-                    } message: {
-                        Text(viewModel.errorMessage ?? "")
-                            .accessibilityIdentifier("errorMessage")
                     }
-                }
+                    .navigationDestination(isPresented: $viewModel.isAuthenticated){
+                        HomeView()
+                    }
+            }
+            .navigationBarHidden(true)
         }
-        .navigationBarHidden(true)
     }
 }
 

@@ -11,22 +11,29 @@ import SwiftUI
 struct ActivitySection: View {
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Recent Activities")
-                .font(.title2)
-                .fontWeight(.bold)
-                .padding(.horizontal)
-            
-            VStack(spacing: 12) {
-                ForEach(0..<3) { _ in
-                    ActivityCardView(
-                        title: "New Calendar Event Created",
-                        description: "Family gathering at richmond park, Bring snacks and cozy clothes",
-                        timeAgo: "25 mins ago",
-                        author: "Karen"
-                    )
-                }
-            }
-            .padding()
+           HStack {
+               Text("Recent Activities")
+                   .font(.title2)
+                   .fontWeight(.bold)
+               Spacer()
+               Button("See all") {
+                   // Action
+               }
+               .foregroundColor(.blue)
+           }
+           .padding(.horizontal)
+           
+           VStack(spacing: 12) {
+               ForEach(0..<3) { _ in
+                   ActivityCardView(activity: Activity(
+                       title: "New Calendar Event Created",
+                       description: "Family gathering at richmond park, Bring snacks and cozy clothes",
+                       author: "Karen",
+                       createdAt: Date().addingTimeInterval(-25 * 60)
+                   ))
+               }
+           }
+           .padding()
         }
     }
 }

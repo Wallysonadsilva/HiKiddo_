@@ -76,6 +76,7 @@ class AuthViewModel: ObservableObject {
                 password: password
             )
             print("Sign in successful: \(authResponse)")
+            self.isAuthenticated = true
         } catch {
             errorMessage = error.localizedDescription
             throw error

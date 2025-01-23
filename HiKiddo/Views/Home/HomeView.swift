@@ -64,6 +64,7 @@ struct HomeView: View {
                 ActivitySection()
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
     
     struct CustomShape: Shape {

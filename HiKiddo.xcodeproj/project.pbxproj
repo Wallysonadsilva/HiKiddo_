@@ -12,7 +12,6 @@
 		13443F4B2D2ECA7100237A64 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 13443F4A2D2ECA7100237A64 /* Realtime */; };
 		13443F4D2D2ECA7100237A64 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 13443F4C2D2ECA7100237A64 /* Storage */; };
 		13443F512D2ECBA400237A64 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 13443F502D2ECBA400237A64 /* Supabase */; };
-		13443F602D2EDB1D00237A64 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 13443F5F2D2EDB1D00237A64 /* Config.xcconfig */; };
 		13F19FC02D30626900C98E1D /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 13F19FBF2D30626900C98E1D /* FacebookLogin */; };
 /* End PBXBuildFile section */
 
@@ -208,7 +207,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1610;
-				LastUpgradeCheck = 1610;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					133AB64E2D2C9784007397CF = {
 						CreatedOnToolsVersion = 16.1;
@@ -253,7 +252,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13443F602D2EDB1D00237A64 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
