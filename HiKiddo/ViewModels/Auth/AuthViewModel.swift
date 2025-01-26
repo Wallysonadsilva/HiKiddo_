@@ -15,6 +15,8 @@ class AuthViewModel: ObservableObject {
     let supabase: SupabaseClient
     private lazy var facebookAuthService = FacebookAuthService(supabase: supabase)
     private lazy var googleAuthService = GoogleAuthService(supabase: supabase)
+    @Published var userName: String = ""
+    @Published var profileImageURL: URL?
     
     init(supabase: SupabaseClient = Database.client) {
         self.supabase = supabase
@@ -103,10 +105,39 @@ class AuthViewModel: ObservableObject {
     func handleGoogleSignIn() async {
         do {
             let session = try await googleAuthService.signIn()
-            self.isAuthenticated = true
+            await MainActor.run {
+                self.isAuthenticated = true
+            }
+            try await getUserName()
+            try await getUserProfile()
             print("Successfully signed in with Google:  \(session)")
+            print ("User Name: \(userName)")
         } catch {
-            self.errorMessage = error.localizedDescription
+            await MainActor.run {
+                self.errorMessage = error.localizedDescription
+            }
         }
     }
+    
+    func getUserName() async throws {
+        let metadata = try await supabase.auth.session.user.userMetadata
+        if let fullName = metadata["full_name"]?.value as? String {
+            await MainActor.run {
+                self.userName = fullName
+            }
+        }
+    }
+    
+    func getUserProfile() async throws {
+       let metadata = try await supabase.auth.session.user.userMetadata
+       if let avatarURL = metadata["avatar_url"]?.value as? String,
+          let url = URL(string: avatarURL) {
+           await MainActor.run {
+               self.profileImageURL = url
+               print("Set profile image URL:", url)
+           }
+       }
+    }
+    
+    
 }

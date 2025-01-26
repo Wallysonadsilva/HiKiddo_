@@ -252,7 +252,7 @@ struct AuthView: View {
                         }
                     }
                     .navigationDestination(isPresented: $viewModel.isAuthenticated){
-                        HomeView()
+                        HomeView(authViewModel: AuthViewModel())
                     }
             }
             .navigationBarHidden(true)
