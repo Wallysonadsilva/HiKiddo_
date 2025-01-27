@@ -11,11 +11,14 @@ import SwiftUI
 struct HomeView: View {
     @State private var belongsToFamilyGroup: Bool = false
     @StateObject var authViewModel: AuthViewModel
+    @State private var showCreateFamilyGroupSheet = false
+    @State private var settingsDetent = PresentationDetent.medium
+    @State private var familyName = ""
     
     init(authViewModel: AuthViewModel) {
         _authViewModel = StateObject(wrappedValue: authViewModel)
     }
-
+    
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
@@ -29,24 +32,26 @@ struct HomeView: View {
                     // Profile Image and Greeting
                     HStack {
                         AsyncImage(url: authViewModel.profileImageURL) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 50, height: 50)
-                                    .clipShape(Circle())
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.primeryYellow.opacity(0.7), lineWidth: 3)
-                                    )
-                            } placeholder: {
-                                Circle()
-                                    .fill(Color.gray.opacity(0.7))
-                                    .frame(width: 50, height: 50)
-                                    .overlay(
-                                        Image(systemName: "person.circle.fill")
-                                            .foregroundColor(.white)
-                                    )
-                            }
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.primeryYellow.opacity(0.9), lineWidth: 5)
+                                )
+                        } placeholder: {
+                            Circle()
+                                .stroke(Color.primeryYellow.opacity(0.9), lineWidth: 5)
+                                .fill(Color.gray.opacity(0.7))
+                                .frame(width: 50, height: 50)
+                                .overlay(
+                                    Image(systemName: "person.circle.fill")
+                                        .foregroundColor(.white)
+                                )
+                            
+                        }
                         
                         VStack(alignment: .leading) {
                             Text("Morning!")
@@ -108,6 +113,7 @@ struct HomeView: View {
                     Button(action: {
                         // Action to create or join a family group
                         print("Create Family Button Tapped")
+                        showCreateFamilyGroupSheet = true
                     }) {
                         Text("Create a Family")
                             .foregroundColor(.white)
@@ -116,6 +122,53 @@ struct HomeView: View {
                             .background(Color.primaryPurple)
                             .cornerRadius(10)
                             .padding(.horizontal)
+                    }
+                    .sheet(isPresented: $showCreateFamilyGroupSheet) {
+                        NavigationView {  // Add this wrapper
+                            VStack(spacing: 20) {
+                                Text("Create Your Family Group")
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .padding(.top, 20)
+                                
+                                TextField("Family Name", text: $familyName)
+                                    .frame(width: 220)
+                                    .padding(15)
+                                    .multilineTextAlignment(.center)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.primeryYellow)
+                                    )
+                                
+                                Button(action: {
+                                    showCreateFamilyGroupSheet = false
+                                }) {
+                                    Text("Create Family")
+                                        .foregroundColor(.white)
+                                        .frame(maxWidth: .infinity)
+                                        .padding()
+                                        .background(Color.primaryPurple)
+                                        .cornerRadius(10)
+                                }
+                                .padding(.horizontal, 60)
+                                
+                                Spacer()
+                            }
+                            .navigationBarItems(trailing:
+                                                    Button(action: {
+                                showCreateFamilyGroupSheet = false
+                            }) {
+                                Image(systemName: "xmark.circle")
+                                    .foregroundColor(.gray)
+                                    .font(.title2)
+                            }
+                            )
+                        }
+                        .presentationDetents(
+                            [.medium, .large],
+                            selection: $settingsDetent
+                        )
+                        
                     }
                     Spacer()
                 }
@@ -129,6 +182,7 @@ struct HomeView: View {
             }
         }
     }
+    
     
     struct CustomShape: Shape {
         func path(in rect: CGRect) -> Path {
@@ -150,6 +204,7 @@ struct HomeView: View {
         }
     }
 }
+
 
 #Preview {
     HomeView(authViewModel: AuthViewModel())
