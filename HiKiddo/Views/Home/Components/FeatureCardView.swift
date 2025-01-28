@@ -17,10 +17,10 @@ struct FeatureCardView: View {
         ZStack(alignment: .bottomLeading) {
             // Background Image
             Image(backgroundImage)
-                .resizable() // Makes the image scalable
-                .scaledToFill() // Ensures the image fills the frame
-                .frame(width: 200, height: 200) // Matches the frame size
-                .clipped() // Ensures no overflow outside the frame
+                .resizable()
+                .scaledToFill()
+                .frame(width: 200, height: 200)
+                .clipped() 
             
             backgroundColor.opacity(0.1)
             

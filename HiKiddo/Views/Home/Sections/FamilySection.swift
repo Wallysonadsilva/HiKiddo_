@@ -9,11 +9,7 @@ import Foundation
 import SwiftUI
 
 struct FamilySection: View {
-    let familyMembers = [
-        FamilyMember(name: "Alice", profileImage: "create_event"),
-        FamilyMember(name: "Elle", profileImage: "task_feature"),
-        FamilyMember(name: "Bob", profileImage: "family_board")
-    ]
+    @ObservedObject var familyViewModel: FamilyViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,11 +20,11 @@ struct FamilySection: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
-                    ForEach(familyMembers) { member in // Use ForEach with your array
+                    ForEach(familyViewModel.familyMembers) { member in
                         FamilyMemberView(familyMember: member)
                     }
                     
-                    VStack{
+                    VStack {
                         // Add Member Button
                         Button(action: {
                             // Add member action
@@ -49,5 +45,39 @@ struct FamilySection: View {
                 .padding()
             }
         }
+    }
+}
+
+// For Preview
+struct FamilySection_Previews: PreviewProvider {
+    static var previews: some View {
+        // Create mock FamilyViewModel with mock data
+        let mockViewModel = FamilyViewModel(supabaseClient: AuthViewModel().supabase)
+        mockViewModel.familyMembers = [
+            FamilyMember(
+                id: UUID(),
+                familyId: UUID(),
+                profileId: UUID(),
+                role: "member",
+                joinedAt: Date(),
+                invitedBy: nil,
+                status: "active",
+                name: "Alice",
+                profileImageUrl: nil
+            ),
+            FamilyMember(
+                id: UUID(),
+                familyId: UUID(),
+                profileId: UUID(),
+                role: "member",
+                joinedAt: Date(),
+                invitedBy: nil,
+                status: "active",
+                name: "Bob",
+                profileImageUrl: nil
+            )
+        ]
+        
+        return FamilySection(familyViewModel: mockViewModel)
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FamilyMember: Identifiable {
+struct FamilyMembers: Identifiable {
     let id = UUID()
     let name: String
     let profileImage: String
