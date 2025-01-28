@@ -86,14 +86,19 @@ class AuthViewModel: ObservableObject {
     }
     
     // Facebook Sign in
-    func handleFacebookSignIn() async {
+    func handleFacebookSignIn(familyViewModel: FamilyViewModel) async {
             do {
                 let session = try await facebookAuthService.signIn()
+                
+                try await getUserName()
+                try await getUserProfile()
+                
+                await familyViewModel.checkFamilyMembership()
+                
                 await MainActor.run {
                     self.isAuthenticated = true
-                    // Handle successful sign in
-                    print("Successfully signed in with Facebook:  \(session)")
                 }
+                print("Successfully signed in with Facebook:  \(session)")
             } catch {
                 await MainActor.run {
                     self.errorMessage = error.localizedDescription
@@ -102,16 +107,18 @@ class AuthViewModel: ObservableObject {
         }
     
     // Google Sign in
-    func handleGoogleSignIn() async {
+    func handleGoogleSignIn(familyViewModel: FamilyViewModel) async {
         do {
             let session = try await googleAuthService.signIn()
+            try await getUserName()
+            try await getUserProfile()
+            
+            await familyViewModel.checkFamilyMembership()
+            
             await MainActor.run {
                 self.isAuthenticated = true
             }
-            try await getUserName()
-            try await getUserProfile()
             print("Successfully signed in with Google:  \(session)")
-            print ("User Name: \(userName)")
         } catch {
             await MainActor.run {
                 self.errorMessage = error.localizedDescription

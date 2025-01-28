@@ -10,12 +10,12 @@ import SwiftUI
 
 struct HomeView: View {
    @StateObject var authViewModel: AuthViewModel
-   @StateObject private var familyViewModel: FamilyViewModel
+   @StateObject var familyViewModel: FamilyViewModel
    @State private var showCreateFamilyGroupSheet = false
    @State private var settingsDetent = PresentationDetent.medium
    @State private var familyName = ""
    
-   init(authViewModel: AuthViewModel) {
+   init(authViewModel: AuthViewModel, familyViewModel: FamilyViewModel) {
        _authViewModel = StateObject(wrappedValue: authViewModel)
        _familyViewModel = StateObject(wrappedValue: FamilyViewModel(supabaseClient: authViewModel.supabase))
    }
@@ -83,7 +83,8 @@ struct HomeView: View {
            
            // Main Content: Conditional sections
            if familyViewModel.isLoading {
-               ProgressView()
+               ProgressView("Loading...")
+                               .frame(maxWidth: .infinity, maxHeight: .infinity)
            } else if familyViewModel.belongsToFamilyGroup {
                VStack(spacing: 0) {
                    FeaturesSection()
@@ -261,5 +262,5 @@ struct familySection: View {
 }
 
 #Preview {
-   HomeView(authViewModel: AuthViewModel())
+    HomeView(authViewModel: AuthViewModel(), familyViewModel: FamilyViewModel(supabaseClient: Database.client))
 }

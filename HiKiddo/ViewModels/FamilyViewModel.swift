@@ -23,6 +23,7 @@ class FamilyViewModel: ObservableObject {
     
     func checkFamilyMembership() async {
         isLoading = true
+        defer { isLoading = false }
         do {
             guard let userId = supabase.auth.currentUser?.id else {
                 isLoading = false

@@ -11,8 +11,10 @@ import Supabase
 
 struct AuthView: View {
     @StateObject private var viewModel: AuthViewModel
+    @StateObject private var familyViewModel: FamilyViewModel
     public init(viewModel: AuthViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
+        _familyViewModel = StateObject(wrappedValue: FamilyViewModel(supabaseClient: viewModel.supabase))
     }
     
     @State private var authMode: AuthMode = .login
@@ -182,7 +184,7 @@ struct AuthView: View {
                                     isGoogleSignInLoading = true
                                     Task {
                                         do{
-                                            await viewModel.handleGoogleSignIn()
+                                            await viewModel.handleGoogleSignIn(familyViewModel: familyViewModel)
                                         } catch {
                                             print("Google Sign In Error: \(error)")
                                         }
@@ -211,7 +213,7 @@ struct AuthView: View {
                                     isFacebookSignInLoading = true
                                     Task {
                                         do {
-                                            await viewModel.handleFacebookSignIn()
+                                            await viewModel.handleFacebookSignIn(familyViewModel: familyViewModel)
                                         } catch {
                                             print("Facebook Sign In Error: \(error)")
                                         }
@@ -252,7 +254,7 @@ struct AuthView: View {
                         }
                     }
                     .navigationDestination(isPresented: $viewModel.isAuthenticated){
-                        HomeView(authViewModel: AuthViewModel())
+                        HomeView(authViewModel: AuthViewModel(), familyViewModel: familyViewModel)
                     }
             }
             .navigationBarHidden(true)
