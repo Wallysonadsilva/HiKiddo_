@@ -18,15 +18,21 @@ class GoogleAuthService {
     
     func signIn() async throws -> Session {
         print("Starting Google login...")
-        guard let redirectURL = URL(string: "HiKiddo.HiKiddo://login-callback") else {
+        guard let redirectURL = URL(string: "hikiddo.hikiddo://login-callback") else {
             throw URLError(.badURL)
         }
         
         let session = try await supabase.auth.signInWithOAuth(
             provider: .google,
-            redirectTo: redirectURL
-        ) { (session: ASWebAuthenticationSession) in
+            redirectTo: redirectURL,
+            scopes: "email profile",
+            queryParams: [
+                (name: "prompt", value: "select_account"),
+                (name: "access_type", value: "offline")
+            ]
+        ) { (webAuthSession: ASWebAuthenticationSession) in
             print("Configuring OAuth session...")
+            webAuthSession.prefersEphemeralWebBrowserSession = false
         }
         
         print("OAuth sign in successful")
