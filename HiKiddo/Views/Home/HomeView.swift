@@ -67,7 +67,28 @@ struct HomeView: View {
                    
                    // Settings and Notifications
                    HStack(spacing: 20) {
-                       Button(action: {}) {
+                       Menu {
+                           Button(action: {
+                               // Navigate to Profile View
+                           }) {
+                               Label("Profile", systemImage: "person.circle")
+                           }
+                           
+                           Button(action: {
+                               // Navigate to Family Settings
+                           }) {
+                               Label("Family Settings", systemImage: "house")
+                           }
+                           
+                           Button(action: {
+                               Task {
+                                  await authViewModel.signOut()
+                               }
+                           }) {
+                               Label("Logout", systemImage: "arrow.backward.circle")
+                                   .foregroundColor(.red)
+                           }
+                       } label: {
                            Image(systemName: "gear")
                                .foregroundColor(.white)
                        }

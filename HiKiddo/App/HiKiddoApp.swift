@@ -9,12 +9,17 @@ import FacebookCore
 
 @main
 struct HiKiddoApp: App {
-    // Add this to handle deep links
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    @StateObject private var authViewModel = AuthViewModel()
     
     var body: some Scene {
         WindowGroup {
-            WelcomeView()
+            if authViewModel.isAuthenticated {
+                HomeView(authViewModel: authViewModel,
+                         familyViewModel: FamilyViewModel(supabaseClient: authViewModel.supabase))
+            } else {
+                AuthView(viewModel: authViewModel)
+            }
         }
     }
 }

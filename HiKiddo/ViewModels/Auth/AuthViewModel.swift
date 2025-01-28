@@ -146,5 +146,12 @@ class AuthViewModel: ObservableObject {
        }
     }
     
+    func signOut() async {
+        try? await supabase.auth.signOut()
+        await MainActor.run {
+            self.isAuthenticated = false
+        }
+    }
+    
     
 }

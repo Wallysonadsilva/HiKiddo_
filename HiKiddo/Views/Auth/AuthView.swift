@@ -183,12 +183,8 @@ struct AuthView: View {
                                 Button(action: {
                                     isGoogleSignInLoading = true
                                     Task {
-                                        do{
-                                            await viewModel.handleGoogleSignIn(familyViewModel: familyViewModel)
-                                        } catch {
-                                            print("Google Sign In Error: \(error)")
-                                        }
-                                        isGoogleSignInLoading = false  // Make sure to reset loading state
+                                        await viewModel.handleGoogleSignIn(familyViewModel: familyViewModel)
+                                        isGoogleSignInLoading = false
                                     }
                                 }) {
                                     ZStack {
@@ -212,12 +208,8 @@ struct AuthView: View {
                                 Button(action: {
                                     isFacebookSignInLoading = true
                                     Task {
-                                        do {
-                                            await viewModel.handleFacebookSignIn(familyViewModel: familyViewModel)
-                                        } catch {
-                                            print("Facebook Sign In Error: \(error)")
-                                        }
-                                        isFacebookSignInLoading = false  // Make sure to reset loading state
+                                        await viewModel.handleFacebookSignIn(familyViewModel: familyViewModel)
+                                        isFacebookSignInLoading = false
                                     }
                                 }) {
                                     ZStack {
@@ -230,7 +222,7 @@ struct AuthView: View {
                                             ProgressView()
                                                 .tint(.white)
                                         } else {
-                                            Image("facebook_logo") // Add this to your assets
+                                            Image("facebook_logo")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .frame(width: 24, height: 24)
