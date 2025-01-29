@@ -45,3 +45,17 @@ struct FamilyMemberView: View {
         }
     }
 }
+
+#Preview {
+    FamilyMemberView(familyMember: FamilyMember(
+        id: UUID(),
+        familyId: UUID(),
+        profileId: UUID(),
+        role: "Parent",
+        joinedAt: Date(),
+        invitedBy: nil,
+        status: "Active",
+        name: "Alice Johnson",
+        profileImageUrl: "https://via.placeholder.com/150"
+    ))
+}

@@ -48,36 +48,32 @@ struct FamilySection: View {
     }
 }
 
-// For Preview
-struct FamilySection_Previews: PreviewProvider {
-    static var previews: some View {
-        // Create mock FamilyViewModel with mock data
-        let mockViewModel = FamilyViewModel(supabaseClient: AuthViewModel().supabase)
-        mockViewModel.familyMembers = [
-            FamilyMember(
-                id: UUID(),
-                familyId: UUID(),
-                profileId: UUID(),
-                role: "member",
-                joinedAt: Date(),
-                invitedBy: nil,
-                status: "active",
-                name: "Alice",
-                profileImageUrl: nil
-            ),
-            FamilyMember(
-                id: UUID(),
-                familyId: UUID(),
-                profileId: UUID(),
-                role: "member",
-                joinedAt: Date(),
-                invitedBy: nil,
-                status: "active",
-                name: "Bob",
-                profileImageUrl: nil
-            )
-        ]
-        
-        return FamilySection(familyViewModel: mockViewModel)
-    }
+#Preview {
+    let mockViewModel = FamilyViewModel(supabaseClient: AuthViewModel().supabase)
+    mockViewModel.familyMembers = [
+        FamilyMember(
+            id: UUID(),
+            familyId: UUID(),
+            profileId: UUID(),
+            role: "member",
+            joinedAt: Date(),
+            invitedBy: nil,
+            status: "active",
+            name: "Alice",
+            profileImageUrl: nil
+        ),
+        FamilyMember(
+            id: UUID(),
+            familyId: UUID(),
+            profileId: UUID(),
+            role: "member",
+            joinedAt: Date(),
+            invitedBy: nil,
+            status: "active",
+            name: "Bob",
+            profileImageUrl: nil
+        )
+    ]
+    
+    return FamilySection(familyViewModel: mockViewModel)
 }
