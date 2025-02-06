@@ -147,11 +147,22 @@ class AuthViewModel: ObservableObject {
     }
     
     func signOut() async {
-        try? await supabase.auth.signOut()
-        await MainActor.run {
-            self.isAuthenticated = false
+        do {
+            try await supabase.auth.signOut()
+            
+            // Clear stored authentication state
+            await MainActor.run {
+                self.isAuthenticated = false
+                self.userName = ""
+                self.profileImageURL = nil
+            }
+            
+            print("✅ User signed out successfully")
+        } catch {
+            print("❌ Error signing out: \(error.localizedDescription)")
         }
     }
+
     
     
 }

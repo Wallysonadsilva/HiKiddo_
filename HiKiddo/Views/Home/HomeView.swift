@@ -9,15 +9,15 @@ import Foundation
 import SwiftUI
 
 struct HomeView: View {
-   @StateObject var authViewModel: AuthViewModel
-   @StateObject var familyViewModel: FamilyViewModel
+   @ObservedObject var authViewModel: AuthViewModel
+   @ObservedObject var familyViewModel: FamilyViewModel
    @State private var showCreateFamilyGroupSheet = false
    @State private var settingsDetent = PresentationDetent.medium
    @State private var familyName = ""
    
    init(authViewModel: AuthViewModel, familyViewModel: FamilyViewModel) {
-       _authViewModel = StateObject(wrappedValue: authViewModel)
-       _familyViewModel = StateObject(wrappedValue: FamilyViewModel(supabaseClient: authViewModel.supabase))
+       _authViewModel = ObservedObject(wrappedValue: authViewModel)
+       _familyViewModel = ObservedObject(wrappedValue: FamilyViewModel(supabaseClient: authViewModel.supabase))
    }
    
    var body: some View {

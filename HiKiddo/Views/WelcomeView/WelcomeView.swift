@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    @State private var navigateToAuth = false
-    @StateObject private var authViewModel = AuthViewModel(supabase: Database.client)
-    
+    @ObservedObject var authViewModel: AuthViewModel
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 25) {
@@ -56,7 +55,6 @@ struct WelcomeView: View {
 // Preview
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
-        WelcomeView()
+        WelcomeView(authViewModel: AuthViewModel(supabase: Database.client))
     }
 }
-

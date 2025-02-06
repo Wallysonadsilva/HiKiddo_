@@ -18,7 +18,7 @@ struct HiKiddoApp: App {
                 HomeView(authViewModel: authViewModel,
                          familyViewModel: FamilyViewModel(supabaseClient: authViewModel.supabase))
             } else {
-                AuthView(viewModel: authViewModel)
+                WelcomeView(authViewModel: authViewModel)
             }
         }
     }
