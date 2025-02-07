@@ -31,9 +31,8 @@ struct FamilyMember: Codable, Identifiable {
     let joinedAt: Date
     let invitedBy: UUID?
     let status: String
-    let name: String?
-    let profileImageUrl: String?
-    
+    let profile: Profile?
+
     enum CodingKeys: String, CodingKey {
         case id
         case familyId = "family_id"
@@ -42,7 +41,16 @@ struct FamilyMember: Codable, Identifiable {
         case joinedAt = "joined_at"
         case invitedBy = "invited_by"
         case status
-        case name
-        case profileImageUrl = "profile_image_url"
+        case profile = "profiles"
+    }
+}
+
+struct Profile: Codable {
+    let fullName: String?
+    let avatarUrl: String?
+
+    enum CodingKeys: String, CodingKey {
+        case fullName = "full_name"
+        case avatarUrl = "avatar_url"
     }
 }

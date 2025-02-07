@@ -17,7 +17,7 @@ struct FamilyMemberView: View {
                     .fill(Color.blue.opacity(0.1))
                     .frame(width: 60, height: 60)
                 
-                if let imageUrl = familyMember.profileImageUrl,
+                if let imageUrl = familyMember.profile?.avatarUrl,
                    !imageUrl.isEmpty {
                     AsyncImage(url: URL(string: imageUrl)) { image in
                         image
@@ -40,7 +40,7 @@ struct FamilyMemberView: View {
                         .foregroundColor(.gray)
                 }
             }
-            Text(familyMember.name ?? "Unknown")
+            Text(familyMember.profile?.fullName ?? "Unknown")
                 .font(.caption)
         }
     }
@@ -55,7 +55,9 @@ struct FamilyMemberView: View {
         joinedAt: Date(),
         invitedBy: nil,
         status: "Active",
-        name: "Alice Johnson",
-        profileImageUrl: "https://via.placeholder.com/150"
+        profile: Profile(
+            fullName: "Alice Johnson",
+            avatarUrl: "https://via.placeholder.com/150"
+        )
     ))
 }

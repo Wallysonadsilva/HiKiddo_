@@ -29,31 +29,34 @@ class FamilyViewModel: ObservableObject {
                 isLoading = false
                 return
             }
-            
+
             let query = supabase.from("family_members")
-                .select()
+                .select("""
+                    id, family_id, profile_id, role, joined_at, status,
+                    profiles!family_members_profile_id_fkey ( full_name, avatar_url )
+                """)
                 .eq("profile_id", value: userId.uuidString)
-            
+
+
             let members: [FamilyMember] = try await query.execute().value
             
-            belongsToFamilyGroup = !members.isEmpty
-            if !members.isEmpty {
-                let familyId = members[0].familyId
-                let familyQuery = supabase.from("family_groups")
-                    .select()
-                    .eq("id", value: familyId.uuidString)
-                    .single()
-                
-                let family: FamilyGroup = try await familyQuery.execute().value
-                
-                familyGroup = family
-                familyMembers = members
+            DispatchQueue.main.async {
+                self.belongsToFamilyGroup = !members.isEmpty
+                if !members.isEmpty {
+                    self.familyMembers = members
+                    self.familyGroup = FamilyGroup(id: members[0].familyId, name: "Family Name", createdAt: Date(), createdBy: members[0].profileId, updatedAt: Date())
+                }
             }
         } catch {
-            errorMessage = error.localizedDescription
+            print("❌ Error fetching family membership: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                self.errorMessage = error.localizedDescription
+            }
         }
-        isLoading = false
     }
+
+
+
     
     func createFamily(name: String) async -> Bool {
         isLoading = true
@@ -100,6 +103,8 @@ class FamilyViewModel: ObservableObject {
             return false
         }
     }
+    
+    
 
 }
     

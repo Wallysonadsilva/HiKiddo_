@@ -21,8 +21,14 @@ struct FamilySection: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
                     ForEach(familyViewModel.familyMembers) { member in
-                        FamilyMemberView(familyMember: member)
+                        if let profile = member.profile {
+                            FamilyMemberView(familyMember: member)
+                        } else {
+                            Text("Unknown Member")
+                                .font(.caption)
+                        }
                     }
+
                     
                     VStack {
                         // Add Member Button
@@ -59,8 +65,10 @@ struct FamilySection: View {
             joinedAt: Date(),
             invitedBy: nil,
             status: "active",
-            name: "Alice",
-            profileImageUrl: nil
+            profile: Profile(
+                fullName: "Alice Johnson",
+                avatarUrl: nil
+            )
         ),
         FamilyMember(
             id: UUID(),
@@ -70,8 +78,10 @@ struct FamilySection: View {
             joinedAt: Date(),
             invitedBy: nil,
             status: "active",
-            name: "Bob",
-            profileImageUrl: nil
+            profile: Profile(
+                fullName: "Bob Smith",
+                avatarUrl: nil
+            )
         )
     ]
     
